@@ -1,9 +1,10 @@
 # Python 3.8.10
-# Parses news from web and saves it in json file 
-import json, requests
+# Parses news for the current day from web and saves it in json file
+import json, requests, datetime
 
 # URL for data parcing
-url = 'http://newsline.kg/getNews.php?limit=30&last_dt=2022-07-25'
+date_today = datetime.date.today()
+url = f'http://newsline.kg/getNews.php?limit=30&last_dt={date_today}'
 
 # Data collecting
 response = requests.get(url)
@@ -14,7 +15,7 @@ print(f"Status code: {response.status_code}")
 response_dict = response.json() 
 
 # Convert a Python value to json file
-filename = 'news_parcer_25072022.json'
+filename = 'news_parcer_today.json'
 with open(filename,'w') as file:
 	for news in response_dict['data']:
 		json.dump(news, file, indent=4, ensure_ascii=False)
